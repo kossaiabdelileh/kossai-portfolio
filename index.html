@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kossai — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070b12;
+    --surface: #0e1623;
+    --surface2: #141f30;
+    --accent: #1a8cff;
+    --accent2: #00d4a1;
+    --text: #eaf0fb;
+    --muted: #7a8fa8;
+    --border: rgba(255,255,255,0.07);
+    --radius: 14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Mulish', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    background: rgba(7,11,18,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.03em; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-family: var(--font-display); font-size: 13px; font-weight: 600;
+    padding: 8px 20px; border-radius: 8px;
+    background: var(--accent); color: #fff;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,140,255,.18) 0%, transparent 70%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,161,.12) 0%, transparent 70%);
+  }
+  .hero-inner { max-width: 780px; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(26,140,255,.12); border: 1px solid rgba(26,140,255,.3);
+    color: #6eb8ff; font-size: 12px; font-weight: 600; letter-spacing: .06em;
+    padding: 6px 14px; border-radius: 20px;
+    margin-bottom: 28px; text-transform: uppercase;
+  }
+  .hero-badge span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px; font-weight: 300; color: var(--muted);
+    max-width: 540px; margin-bottom: 40px; line-height: 1.8;
+  }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 10px; text-decoration: none;
+    transition: transform .15s, opacity .15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: .9; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text);
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    padding: 13px 28px; border-radius: 10px; text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color .15s, background .15s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.04); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 60px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num { font-family: var(--font-display); font-size: 32px; font-weight: 800; color: var(--text); }
+  .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 5%; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800; letter-spacing: -1px;
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .section-sub { font-size: 16px; color: var(--muted); max-width: 500px; line-height: 1.75; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px; margin-top: 56px;
+  }
+  .skill-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color .2s, transform .2s;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(26,140,255,.06));
+    pointer-events: none;
+  }
+  .skill-card:hover { border-color: rgba(26,140,255,.35); transform: translateY(-3px); }
+  .skill-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .skill-icon.blue { background: rgba(26,140,255,.15); }
+  .skill-icon.teal { background: rgba(0,212,161,.15); }
+  .skill-icon.amber { background: rgba(255,180,0,.12); }
+  .skill-icon.coral { background: rgba(255,95,80,.12); }
+  .skill-card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .skill-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .skill-tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 6px; border: 1px solid var(--border); color: var(--muted);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 20px; }
+  .project-block {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-bottom: 60px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .project-block:hover { border-color: rgba(26,140,255,.3); }
+  .project-block.reverse { direction: rtl; }
+  .project-block.reverse > * { direction: ltr; }
+  .project-visual {
+    min-height: 360px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+    position: relative; overflow: hidden;
+  }
+  .project-visual.v1 { background: linear-gradient(135deg, #071428 0%, #0a2040 100%); }
+  .project-visual.v2 { background: linear-gradient(135deg, #0a1a10 0%, #0d2618 100%); }
+  .project-visual.v3 { background: linear-gradient(135deg, #1a0a08 0%, #2a1208 100%); }
+  .project-visual.v4 { background: linear-gradient(135deg, #120a1a 0%, #1e0d2e 100%); }
+  .project-visual .big-icon { font-size: 90px; opacity: .9; filter: drop-shadow(0 0 40px rgba(26,140,255,.3)); }
+  .project-visual .grid-overlay {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .project-info { padding: 40px 36px; display: flex; flex-direction: column; justify-content: space-between; }
+  .proj-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .proj-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 6px;
+  }
+  .proj-badge.app { background: rgba(26,140,255,.15); color: #6eb8ff; }
+  .proj-badge.web { background: rgba(0,212,161,.12); color: #40e8c0; }
+  .proj-badge.ai { background: rgba(255,180,0,.12); color: #ffcf6e; }
+  .proj-badge.video { background: rgba(255,95,80,.12); color: #ff8f84; }
+  .proj-year { font-size: 12px; color: var(--muted); }
+  .project-info h2 { font-family: var(--font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+  .project-info .desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
+
+  /* Steps */
+  .steps-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 16px; }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(26,140,255,.15); border: 1px solid rgba(26,140,255,.3);
+    color: var(--accent); font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .step-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .proj-tech { display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap; }
+  .tech-tag {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  /* ── PROCESS ── */
+  #process { background: var(--surface); }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0; margin-top: 56px;
+    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  }
+  .process-step {
+    padding: 32px 28px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: rgba(255,255,255,.02); }
+  .ps-num { font-family: var(--font-display); font-size: 40px; font-weight: 800; color: rgba(26,140,255,.2); line-height: 1; margin-bottom: 14px; }
+  .ps-icon { font-size: 26px; margin-bottom: 14px; }
+  .ps-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .ps-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  /* ── TESTIMONIAL PLACEHOLDER ── */
+  .testimonial-band {
+    background: linear-gradient(135deg, #091828 0%, #0e2035 100%);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 80px 5%; text-align: center;
+  }
+  .testimonial-band blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 700; letter-spacing: -0.5px;
+    max-width: 760px; margin: 0 auto 24px;
+    color: var(--text); line-height: 1.35;
+  }
+  .tq-author { font-size: 14px; color: var(--muted); }
+  .tq-author strong { color: var(--accent2); font-weight: 600; }
+
+  /* ── CONTACT ── */
+  #contact { text-align: center; }
+  .contact-inner { max-width: 580px; margin: 0 auto; }
+  .contact-inner .section-sub { margin: 0 auto 40px; text-align: center; }
+  .contact-cards {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; margin-top: 48px;
+  }
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 16px;
+    text-decoration: none; color: var(--text);
+    transition: border-color .2s, transform .2s;
+  }
+  .contact-card:hover { border-color: rgba(26,140,255,.4); transform: translateY(-3px); }
+  .cc-icon { font-size: 26px; margin-bottom: 10px; }
+  .cc-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .cc-val { font-size: 13px; font-weight: 500; color: var(--text); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  .footer-logo { font-family: var(--font-display); font-size: 17px; font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .project-block { grid-template-columns: 1fr; }
+    .project-block.reverse { direction: ltr; }
+    .project-visual { min-height: 220px; }
+    .project-info { padding: 28px 24px; }
+    .contact-cards { grid-template-columns: 1fr; }
+    .process-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .process-step:last-child { border-bottom: none; }
+    .hero-stats { gap: 24px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .hero-inner > * { animation: fadeUp .7s ease both; }
+  .hero-inner > *:nth-child(1){ animation-delay:.05s }
+  .hero-inner > *:nth-child(2){ animation-delay:.15s }
+  .hero-inner > *:nth-child(3){ animation-delay:.25s }
+  .hero-inner > *:nth-child(4){ animation-delay:.35s }
+  .hero-inner > *:nth-child(5){ animation-delay:.45s }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Kossai.</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span></span> Available for Work</div>
+    <h1>I Build, Create<br>& <span class="grad">Automate.</span></h1>
+    <p class="hero-sub">
+      Freelance developer &amp; digital creator blending web development,
+      AI-powered workflows, and video content production into work that delivers results.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#projects">View Projects →</a>
+      <a class="btn-secondary" href="#contact">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-lbl">Years of experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-lbl">Projects delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-lbl">Skill domains</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Client satisfaction goal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">What I Do</div>
+  <h2 class="section-title">Skills &amp; Expertise</h2>
+  <p class="section-sub">A full toolkit covering product development, AI integration, content, and client communication.</p>
+  <div class="skills-grid">
+
+    <div class="skill-card">
+      <div class="skill-icon blue">🌐</div>
+      <h3>Web Development</h3>
+      <p>Building fast, responsive websites and web applications from scratch — clean code, great UX, and real performance.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML/CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Responsive Design</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon teal">📱</div>
+      <h3>Mobile App Development</h3>
+      <p>Creating cross-platform mobile apps using React Native and Expo — testable on real devices, production-ready.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">React Native</span>
+        <span class="skill-tag">Expo</span>
+        <span class="skill-tag">iOS & Android</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon amber">🤖</div>
+      <h3>AI Tools &amp; Prompt Engineering</h3>
+      <p>Leveraging cutting-edge AI platforms and crafting high-quality prompts to automate, generate, and enhance workflows.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">ChatGPT / Claude</span>
+        <span class="skill-tag">Midjourney</span>
+        <span class="skill-tag">Automation</span>
+        <span class="skill-tag">Prompt Design</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon coral">🎬</div>
+      <h3>Video &amp; Content Creation</h3>
+      <p>Producing UGC and promotional video content — scripting, filming, editing — that connects with audiences and drives action.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">UGC Video</span>
+        <span class="skill-tag">Promo Content</span>
+        <span class="skill-tag">Editing</span>
+        <span class="skill-tag">Storytelling</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon blue">💬</div>
+      <h3>Online Customer Service</h3>
+      <p>Handling client communications professionally, resolving issues efficiently, and building trust through every interaction.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">CRM Tools</span>
+        <span class="skill-tag">Live Chat</span>
+        <span class="skill-tag">Email Support</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon teal">📊</div>
+      <h3>Productivity &amp; Office Suite</h3>
+      <p>Fluent in Microsoft Word, Excel, PowerPoint and other productivity tools — creating documents, reports, and presentations with precision.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Microsoft Word</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">PowerPoint</span>
+        <span class="skill-tag">Google Workspace</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Selected Projects</h2>
+      <p class="section-sub">Real work, real detail. Here's how each project was built from idea to delivery.</p>
+    </div>
+  </div>
+
+  <!-- PROJECT 1: MOBILINGO -->
+  <div class="project-block">
+    <div class="project-visual v1">
+      <div class="grid-overlay"></div>
+      <span class="big-icon">📱</span>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="proj-meta">
+          <span class="proj-badge app">Mobile App</span>
+          <span class="proj-badge ai">AI-Powered</span>
+          <span class="proj-year">2024 – Present</span>
+        </div>
+        <h2>MOBILINGO</h2>
+        <p class="desc">A Duolingo-style English learning mobile app built specifically for Mobilis Algeria staff. Featuring gamified lessons, progress tracking, and interactive quizzes — entirely designed and developed from a personal idea into a fully working Expo app.</p>
+
+        <div class="steps-title">How It Was Built</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-label">Concept & Research</div>
+              <div class="step-detail">Identified the gap: Mobilis Algeria staff needed accessible English training. Researched Duolingo's pedagogy and gamification patterns to shape the app concept.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-label">UX Design & Structure</div>
+              <div class="step-detail">Mapped out lesson flows, screen architecture, and user progression system. Designed a clean, mobile-first UI that keeps learners engaged.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-label">React Web App (V1)</div>
+              <div class="step-detail">Built the first version as a React web application — interactive lessons, quizzes, and tracking fully functional in the browser.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-label">React Native Conversion (V2)</div>
+              <div class="step-detail">Converted the web app to React Native using Expo — enabling testing on real physical Android/iOS devices and a native app experience.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-label">Testing & Iteration</div>
+              <div class="step-detail">Deployed via Expo Go for device testing, iterated on navigation, animations, and content delivery based on real usage feedback.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-tech">
+        <span class="tech-tag">React Native</span>
+        <span class="tech-tag">Expo</span>
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Mobile UI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2: RESTAURANT WEBSITES -->
+  <div class="project-block reverse">
+    <div class="project-visual v2">
+      <div class="grid-overlay"></div>
+      <span class="big-icon">🍽️</span>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="proj-meta">
+          <span class="proj-badge web">Web Development</span>
+          <span class="proj-badge ai">Freelance Pitch</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h2>Restaurant Website Collection</h2>
+        <p class="desc">A series of six polished, fully responsive restaurant website demos — spanning fast food, Italian, Japanese, BBQ, vegan, and steakhouse themes — created as pitch samples for local businesses with no web presence. Each demo was uniquely themed with custom branding.</p>
+
+        <div class="steps-title">How It Was Built</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-label">Market Identification</div>
+              <div class="step-detail">Identified local restaurants with zero online presence as a high-value freelance opportunity. Researched what each type of restaurant needs to convert visitors to customers.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-label">Concept Theming for Each Demo</div>
+              <div class="step-detail">Designed 6 distinct visual identities — unique color palettes, typography, and layout styles tailored to each cuisine type and target demographic.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-label">Full Site Development</div>
+              <div class="step-detail">Built each site with hero sections, menus, gallery, about section, opening hours, location map, and contact/reservation CTAs. Mobile-responsive on all devices.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-label">Pitch Preparation</div>
+              <div class="step-detail">Packaged demos as a professional portfolio pitch — showing restaurant owners exactly what their site would look like before paying. A trust-building sales strategy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-tech">
+        <span class="tech-tag">HTML/CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Responsive Design</span>
+        <span class="tech-tag">UI/UX</span>
+        <span class="tech-tag">Branding</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3: AI & PROMPT ENGINEERING -->
+  <div class="project-block">
+    <div class="project-visual v3">
+      <div class="grid-overlay"></div>
+      <span class="big-icon">🤖</span>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="proj-meta">
+          <span class="proj-badge ai">AI / Automation</span>
+          <span class="proj-year">2023 – Present</span>
+        </div>
+        <h2>AI-Powered Workflows &amp; Prompt Engineering</h2>
+        <p class="desc">Consistent application of AI tools across real client projects and personal ventures — from generating visual content to automating content pipelines, building smarter apps, and crafting prompts that unlock reliable, high-quality AI outputs.</p>
+
+        <div class="steps-title">How This Skill Is Applied</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-label">Tool Mastery</div>
+              <div class="step-detail">Deep hands-on experience with ChatGPT, Claude, Midjourney, Runway, ElevenLabs and other leading AI platforms across text, image, video, and voice generation.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-label">Prompt Architecture</div>
+              <div class="step-detail">Crafting structured, reusable prompts using role assignment, chain-of-thought techniques, and output formatting — consistently producing reliable, production-grade results.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-label">App Integration</div>
+              <div class="step-detail">Embedding AI APIs and automation layers inside web and mobile apps — including AI-assisted learning in MOBILINGO and content generation pipelines for clients.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-label">Content Automation</div>
+              <div class="step-detail">Building automated content workflows that reduce production time by 60–80% — from scripting to image generation to video assembly — for creators and businesses.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-tech">
+        <span class="tech-tag">ChatGPT</span>
+        <span class="tech-tag">Claude AI</span>
+        <span class="tech-tag">Midjourney</span>
+        <span class="tech-tag">Prompt Design</span>
+        <span class="tech-tag">Automation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 4: UGC CONTENT -->
+  <div class="project-block reverse">
+    <div class="project-visual v4">
+      <div class="grid-overlay"></div>
+      <span class="big-icon">🎬</span>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="proj-meta">
+          <span class="proj-badge video">Video Content</span>
+          <span class="proj-badge web">UGC</span>
+          <span class="proj-year">2022 – Present</span>
+        </div>
+        <h2>UGC &amp; Promotional Video Production</h2>
+        <p class="desc">End-to-end video content creation for brands and businesses — from concept development and scripting to filming, editing, and final delivery. Producing authentic, high-converting UGC and polished promotional videos that build brand credibility.</p>
+
+        <div class="steps-title">Production Process</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-label">Brief & Strategy</div>
+              <div class="step-detail">Understanding the brand's goals, target audience, and desired outcome. Defining the hook, message, and call-to-action before any production begins.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-label">Scripting & Storyboard</div>
+              <div class="step-detail">Writing tight, platform-optimized scripts. Storyboarding shot sequences for maximum clarity and storytelling impact within the first 3 seconds.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-label">Filming</div>
+              <div class="step-detail">Shooting with attention to lighting, framing, and authenticity. UGC content is intentionally natural; promo content is polished and brand-aligned.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-label">Editing & Delivery</div>
+              <div class="step-detail">Editing with music, captions, transitions, and color grading. Delivering in optimized formats for Instagram, TikTok, YouTube, or paid ads.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-tech">
+        <span class="tech-tag">Video Editing</span>
+        <span class="tech-tag">Scripting</span>
+        <span class="tech-tag">UGC</span>
+        <span class="tech-tag">Instagram / TikTok</span>
+        <span class="tech-tag">Brand Content</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label">How I Work</div>
+  <h2 class="section-title">My Process</h2>
+  <p class="section-sub">Every project follows a clear, collaborative process — so you always know what to expect.</p>
+
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="ps-num">01</div>
+      <div class="ps-icon">🎯</div>
+      <div class="ps-title">Discovery</div>
+      <p class="ps-desc">I start by understanding your goals, audience, and constraints. No assumptions — just honest questions that lead to the right solution.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">02</div>
+      <div class="ps-icon">💡</div>
+      <div class="ps-title">Strategy & Concept</div>
+      <p class="ps-desc">I develop a clear plan — structure, tools, timeline — and often bring original ideas to the table that you wouldn't have thought to ask for.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">03</div>
+      <div class="ps-icon">⚙️</div>
+      <div class="ps-title">Build & Iterate</div>
+      <p class="ps-desc">I build in transparent stages, sharing progress early. Feedback is welcomed and acted on fast — not treated as a disruption.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">04</div>
+      <div class="ps-icon">🚀</div>
+      <div class="ps-title">Deliver & Support</div>
+      <p class="ps-desc">Clean handoff with documentation. I don't disappear after delivery — I make sure everything works and you know how to use it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL BAND -->
+<div class="testimonial-band">
+  <blockquote>
+    "I don't just execute what I'm asked — I bring the ideas, the execution, and the polish. If you're looking for someone who treats your project like their own, that's me."
+  </blockquote>
+  <p class="tq-author"><strong>Kossai</strong> &nbsp;·&nbsp; Freelance Developer & Digital Creator</p>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-sub">Have a project in mind, a role to fill, or just want to see what's possible? Reach out — I respond fast.</p>
+    <a class="btn-primary" href="mailto:kossai.abdelileh@gmail.com" style="display:inline-flex; margin: 0 auto;">Send me an email →</a>
+
+    <div class="contact-cards">
+      <a class="contact-card" href="mailto:kossai.abdelileh@gmail.com">
+        <div class="cc-icon">📧</div>
+        <div class="cc-label">Email</div>
+        <div class="cc-val">kossai.abdelileh@gmail.com</div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/kossai-abdelilleh-82402023a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+        <div class="cc-icon">💼</div>
+        <div class="cc-label">LinkedIn</div>
+        <div class="cc-val">linkedin.com/in/kossai-abdelilleh</div>
+      </a>
+      <a class="contact-card" href="#">
+        <div class="cc-icon">📍</div>
+        <div class="cc-label">Location</div>
+        <div class="cc-val">Algeria · Remote OK</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Kossai.</div>
+  <p
