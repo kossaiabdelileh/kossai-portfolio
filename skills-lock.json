@@ -7,6 +7,12 @@
       "skillPath": "skills/beautiful-article/SKILL.md",
       "computedHash": "4c947cd80c7f0d29313513a95dc936c5de7c524dedec9bd348df2be10a6fb9f9"
     },
+    "ffmpeg": {
+      "source": "digitalsamba/claude-code-video-toolkit",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ffmpeg/SKILL.md",
+      "computedHash": "51fa05bc18bb2691e622aefd1d8ec6d4d96a9e9c44cdf599003c9d6003d11a07"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
@@ -30,6 +36,12 @@
       "sourceType": "github",
       "skillPath": "skills/motion-showreel/SKILL.md",
       "computedHash": "61723927292e7e2809057525f72fcc6dc4c23663fccb481131253ffd24ca909d"
+    },
+    "video-processing-editing": {
+      "source": "erichowens/some_claude_skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/video-processing-editing/SKILL.md",
+      "computedHash": "0ddd9a2a4061dc45edfaddecfb6f2221d42edf0427d435dbb472ead88c3feefe"
     },
     "web-design-engineer": {
       "source": "ConardLi/garden-skills",
