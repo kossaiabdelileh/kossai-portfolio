@@ -7,6 +7,12 @@
       "skillPath": "skills/beautiful-article/SKILL.md",
       "computedHash": "4c947cd80c7f0d29313513a95dc936c5de7c524dedec9bd348df2be10a6fb9f9"
     },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
+    },
     "gpt-image-2": {
       "source": "ConardLi/garden-skills",
       "sourceType": "github",
